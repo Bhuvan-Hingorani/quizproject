@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – Python Quiz</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="/" class="navbar-logo">
+    <div class="logo-icon">🧠</div>
+    codex_bhuvi_
+  </a>
+  <div class="navbar-actions">
+    <span>Create an account?</span>
+    <a href="/register_page" class="btn-nav">Sign Up</a>
+  </div>
+</nav>
+
+<!-- Page -->
+<div class="page-wrapper">
+  <div class="auth-card">
+
+    <!-- Left illustration -->
+    <div class="auth-left">
+      <div class="auth-illustration">🤔</div>
+      <div class="auth-left-caption">
+        <h3>Take a Quiz be more creative<br>in your work</h3>
+      </div>
+      <div class="slide-dots">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- Right form -->
+    <div class="auth-right">
+      <h2>Welcome to Quizkarooo</h2>
+      <p class="subtitle">Login &amp; start playing</p>
+
+      {% if error %}
+        <div class="alert alert-error">{{ error }}</div>
+      {% endif %}
+      {% if msg %}
+        <div class="alert alert-success">{{ msg }}</div>
+      {% endif %}
+
+      <form method="POST" action="/login">
+        <div class="input-group">
+          <label>Enter Name</label>
+          <input type="text" name="username" placeholder="Pranav Kulkarni" required autocomplete="username">
+        </div>
+        <div class="input-group">
+          <label>Enter Password</label>
+          <div class="password-wrap">
+            <input type="password" id="loginPw" name="password" placeholder="••••••••••" required autocomplete="current-password">
+            <button type="button" class="toggle-pw" onclick="togglePw('loginPw', this)">👁</button>
+          </div>
+        </div>
+        <div class="forgot-link">
+          <a href="#">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <p class="footer-names">Made by <strong>Sakshi Upadhye</strong> &amp; <strong>Pranali Raut</strong></p>
+  <p class="footer-copy">&copy; 2025 codex_bhuvi_. All rights reserved.</p>
+</footer>
+
+<script>
+  function togglePw(id, btn) {
+    const el = document.getElementById(id);
+    el.type = el.type === 'password' ? 'text' : 'password';
+    btn.textContent = el.type === 'password' ? '👁' : '🙈';
+  }
+</script>
+</body>
+</html>

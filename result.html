@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Result</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="/" class="navbar-logo">
+    <div class="logo-icon">🧠</div>
+    codex_bhuvi_
+  </a>
+  <div class="navbar-actions">
+    <div class="user-chip">
+      <div class="avatar">{{ username[0].upper() }}</div>
+      {{ username }} ▾
+    </div>
+  </div>
+</nav>
+
+<!-- Page -->
+<div class="page-wrapper">
+  <div class="result-card">
+
+    <div class="congrats-title">Congratulation</div>
+    <div class="result-category">Category : Python</div>
+
+    <div class="result-illustration">
+      <span>🎓</span>
+      <span>🏆</span>
+    </div>
+
+    <div class="you-answered">You answered</div>
+    <div class="score-big">
+      {{ score }} / {{ total }}
+      <small>question{% if score != 1 %}s{% endif %} correct</small>
+    </div>
+
+    <div class="result-stats">
+      <span class="stat-chip correct">✔ {{ correct_count }} Correct</span>
+      <span class="stat-chip wrong">✘ {{ wrong_count }} Wrong</span>
+      {% if skip_count > 0 %}
+        <span class="stat-chip skip">— {{ skip_count }} Skipped</span>
+      {% endif %}
+    </div>
+
+    <div class="result-actions">
+      <a href="/quiz" class="btn-play-again">Play Again</a>
+      <a href="/download/{{ attempt_id }}" class="btn-download-pdf">⬇ Download PDF</a>
+      <a href="/logout" class="btn-back-home">Back to Home</a>
+    </div>
+
+    <!-- Detailed Review -->
+    <div class="review-section">
+      {% for r in results %}
+      {% set options_map = {1: r[1], 2: r[2], 3: r[3], 4: r[4]} %}
+      {% set user_ans    = options_map[r[5]] if r[5] in options_map else None %}
+      {% set correct_ans = options_map[r[6]] %}
+
+      <div class="review-card">
+        <div class="q-text"><b>{{ loop.index }}.</b> {{ r[0] }}</div>
+
+        <div class="answer-row">
+          <span class="lbl">Your Answer</span>
+          {% if user_ans %}
+            <span class="val {% if r[5] == r[6] %}ok{% else %}bad{% endif %}">{{ user_ans }}</span>
+          {% else %}
+            <span class="val na">Not Answered</span>
+          {% endif %}
+        </div>
+
+        <div class="answer-row">
+          <span class="lbl">Correct Answer</span>
+          <span class="val ok">{{ correct_ans }}</span>
+        </div>
+
+        {% if r[5] == 0 %}
+          <span class="verdict-tag skipped">— Skipped</span>
+        {% elif r[5] == r[6] %}
+          <span class="verdict-tag correct">✔ Correct</span>
+        {% else %}
+          <span class="verdict-tag wrong">✘ Wrong</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <p class="footer-names">Made by <strong>Sakshi Upadhye</strong> &amp; <strong>Pranali Raut</strong></p>
+  <p class="footer-copy">&copy; 2025 codex_bhuvi_. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

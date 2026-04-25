@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Quiz</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body data-time="{{ time_limit }}">
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="/" class="navbar-logo">
+    <div class="logo-icon">🧠</div>
+    codex_bhuvi_
+  </a>
+  <div class="navbar-actions">
+    <div class="user-chip">
+      <div class="avatar">{{ session.get('username', 'U')[0].upper() }}</div>
+      {{ session.get('username', 'User') }} ▾
+    </div>
+  </div>
+</nav>
+
+<!-- Page -->
+<div class="page-wrapper">
+  <div class="quiz-card">
+
+    <!-- Timer Bar -->
+    <div class="timer-bar">
+      <span class="quiz-title-small">🐍 Python Quiz</span>
+      <div class="timer-display">
+        ⏱ <span id="timer">30:00</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="timerProgress" style="width:100%"></div>
+      </div>
+    </div>
+
+    <!-- Question progress -->
+    <div class="q-progress">
+      <span class="q-progress-text">Question <span id="qCurrent">1</span> of {{ questions|length }}</span>
+      <div class="q-dots">
+        {% for q in questions %}
+          <div class="q-dot" title="Q{{ loop.index }}"></div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form method="POST" action="/submit" id="quizForm">
+
+      {% for q in questions %}
+      <div class="question-card{% if loop.first %} active{% endif %}" style="display:{% if loop.first %}block{% else %}none{% endif %}">
+
+        <div class="quiz-meta">
+          <span class="category-label">Category : Python</span>
+        </div>
+
+        <div class="question-counter">
+          {{ loop.index }} <span>/ {{ questions|length }}</span>
+        </div>
+
+        <div class="question-text">{{ q[1] }}</div>
+
+        <div class="options-grid">
+          <label class="option">
+            <input type="radio" name="{{ q[0] }}" value="1">
+            <span>{{ q[2] }}</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="{{ q[0] }}" value="2">
+            <span>{{ q[3] }}</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="{{ q[0] }}" value="3">
+            <span>{{ q[4] }}</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="{{ q[0] }}" value="4">
+            <span>{{ q[5] }}</span>
+          </label>
+        </div>
+
+      </div>
+      {% endfor %}
+
+      <!-- Nav buttons -->
+      <div class="nav-buttons">
+        <button type="button" id="prevBtn" disabled>← Previous</button>
+        <button type="button" id="nextBtn">Next Question →</button>
+        <button type="submit"  id="submitBtn">✓ Submit Quiz</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <p class="footer-names">Made by <strong>Sakshi Upadhye</strong> &amp; <strong>Pranali Raut</strong></p>
+  <p class="footer-copy">&copy; 2025 codex_bhuvi_. All rights reserved.</p>
+</footer>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
